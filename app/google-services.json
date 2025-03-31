@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "944462097469",
+    "firebase_url": "https://smartalignora-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smartalignora",
+    "storage_bucket": "smartalignora.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944462097469:android:e72112c51718a8c0850e54",
+        "android_client_info": {
+          "package_name": "com.example.renuka"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBsuSDnsdp6QSqrv2SM-Xd6HN3OVRDKJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
