@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_profile" android:title="Profile" />
+    <item android:id="@+id/nav_realtime" android:title="Real-time Analysis" />
+    <item android:id="@+id/nav_weekly" android:title="Weekly Analysis" />
+    <item android:id="@+id/nav_monthly" android:title="Monthly Analysis" />
+    <item android:id="@+id/nav_suggestions" android:title="Improvement Suggestions" />
+</menu>

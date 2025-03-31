@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/splash_logo"
+        android:layout_width="match_parent"
+        android:layout_height="205dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/badlogo" />
+
+    <TextView
+        android:id="@+id/splash_title"
+        android:layout_width="match_parent"
+        android:layout_height="93dp"
+        android:layout_below="@id/splash_logo"
+        android:layout_marginTop="30dp"
+        android:text="Wearable Posture Detection\nand Alert System"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/splash_quote"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:layout_below="@id/splash_title"
+        android:layout_marginTop="26dp"
+        android:text="“Good posture is the key to a strong presence.”"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+</RelativeLayout>
