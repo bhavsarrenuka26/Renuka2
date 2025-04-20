@@ -10,6 +10,17 @@
     tools:context=".RegisterPage">
 
     <TextView
+        android:layout_width="197dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/allura"
+        android:text="AlignOra."
+        android:textAlignment="center"
+        android:textColor="@color/design_default_color_surface"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Account"
@@ -84,10 +95,11 @@
         android:id="@+id/alraedyTxt"
         android:layout_width="wrap_content"
         android:layout_height="48sp"
+        android:layout_marginTop="20dp"
+        android:onClick="loginPage"
         android:text="Already have an account? Login"
         android:textColor="@android:color/white"
-        android:layout_marginTop="20dp"
-        android:onClick="loginPage"/>
+        android:textSize="16sp" />
 
 
 

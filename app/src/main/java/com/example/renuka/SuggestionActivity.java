@@ -30,9 +30,9 @@ public class SuggestionActivity extends AppCompatActivity {
                 cardSerious = findViewById(R.id.card_serious);
 
                 // Set click listeners for each card
-                cardDaily.setOnClickListener(v -> openVideoPlayer("bhaubirthday"));
-                cardMedium.setOnClickListener(v -> openVideoPlayer("bhaubirthday"));
-                cardSerious.setOnClickListener(v -> openVideoPlayer("bhaubirthday"));
+                cardDaily.setOnClickListener(v -> openVideoPlayer("yoga2"));
+                cardMedium.setOnClickListener(v -> openVideoPlayer("yoga1"));
+                cardSerious.setOnClickListener(v -> openVideoPlayer("yoga3"));
             }
 
             // Open VideoPlayerActivity and pass the video file name
