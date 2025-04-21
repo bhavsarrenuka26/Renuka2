@@ -2,8 +2,13 @@ package com.example.renuka;
 
 import static android.content.ContentValues.TAG;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -16,7 +21,12 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -25,7 +35,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +52,7 @@ public class RegisterPage extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseFirestore fStore ;
     String userId;
+    String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +105,7 @@ public class RegisterPage extends AppCompatActivity {
                 //register the user
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-//                    sendRegistrationNotification();
+                     showRegistrationNotification();
                         Toast.makeText(RegisterPage.this, "User Created", Toast.LENGTH_SHORT).show();
 
                         userId = fAuth.getCurrentUser().getUid();
@@ -115,6 +129,7 @@ public class RegisterPage extends AppCompatActivity {
 
                         });
 
+
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     } else {
                         Toast.makeText(RegisterPage.this, "Error !!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -125,51 +140,55 @@ public class RegisterPage extends AppCompatActivity {
 
             });
         }
+    public void showRegistrationNotification() {
+        String channelId = "registration_channel_id";
+        String channelName = "User Registration";
 
-//    private void sendRegistrationNotification() {
-//            String channelId = "registration_channel";
-//            String channelName = "Registration Notifications";
-//
-//            // Step 1: Create Notification Channel (only for Android O+)
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                NotificationChannel channel = new NotificationChannel(
-//                        channelId,
-//                        channelName,
-//                        NotificationManager.IMPORTANCE_DEFAULT
-//                );
-//                channel.setDescription("Notifications after successful registration");
-//
-//                NotificationManager notificationManager = getSystemService(NotificationManager.class);
-//                if (notificationManager != null) {
-//                    notificationManager.createNotificationChannel(channel);
-//                }
-//            }
-//
-//            // Step 2: Build the Notification
-//            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
-//                    .setSmallIcon(R.drawable.ic_logout) // use your drawable here
-//                    .setContentTitle("Registration Successful 🎉")
-//                    .setContentText("Welcome! You have successfully registered.")
-//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//                    .setAutoCancel(true);
-//
-//            // Step 3: Show the Notification
-//            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-//            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-//
-//                //    ActivityCompat#requestPermissions
-//                // here to request the missing permissions, and then overriding
-//                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                //                                          int[] grantResults)
-//                // to handle the case where the user grants the permission. See the documentation
-//                // for ActivityCompat#requestPermissions for more details.
-//                return;
-//            }
-//            notificationManagerCompat.notify(1, builder.build());
-//        }
-//
+        // Create notification channel (Android 8+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    channelName,
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel.setDescription("Notifies when user registers successfully");
 
-        public void loginPage(View view) {
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.createNotificationChannel(channel);
+            }
+        }
+
+        // Request permission if needed (Android 13+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1001);
+                Log.d("Notify", "Permission granted, sending notification...");
+
+                return;
+            }
+        }
+
+        // Build and send the notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_check) // Make sure this exists!
+                .setContentTitle("Registration Successful 🎉")
+                .setContentText("Welcome to AlignOra..., your account has been created.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+        Log.d("Notify", "Trying to send notification...");
+//        Toast.makeText(this, "Sending notification...", Toast.LENGTH_SHORT).show();
+
+        NotificationManagerCompat.from(this).notify(100, builder.build());
+    }
+
+
+
+
+
+    public void loginPage(View view) {
             startActivity(new Intent(getApplicationContext(),LoginPage.class));
         }
 
